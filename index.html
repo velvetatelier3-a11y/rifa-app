@@ -26,7 +26,23 @@ button,input,select{font:inherit}button{border:0;border-radius:12px;padding:12px
 </head>
 <body>
 <div id="app"></div>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
 <script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBJwjaQEFTqK8HzzaoEMYEOktt5JsIY9Pk",
+    authDomain: "rifa-app-b7ca0.firebaseapp.com",
+    databaseURL: "https://rifa-app-b7ca0-default-rtdb.firebaseio.com",
+    projectId: "rifa-app-b7ca0",
+    storageBucket: "rifa-app-b7ca0.firebasestorage.app",
+    messagingSenderId: "238196948312",
+    appId: "1:238196948312:web:d0c63374aaeea14d6e792d"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script><script>
 const USERS={Administrador:{role:"admin"},"Rifa 1":{role:"rifa"},"Rifa 2":{role:"rifa"},"Rifa 3":{role:"rifa"},"Rifa 4":{role:"rifa"},"Rifa 5":{role:"rifa"},"Rifa 6":{role:"rifa"},"Rifa 7":{role:"rifa"},"Rifa 8":{role:"rifa"},"Rifa 9":{role:"rifa"},"Rifa 0":{role:"rifa"}};
 const defaultPass="1234";
 // Las 10 cartas son FIJAS: 1.000 numeros, 100 por vendedor, sin repetir y sin generarlos al azar.
