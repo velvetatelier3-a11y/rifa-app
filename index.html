@@ -6,108 +6,348 @@
 <meta name="theme-color" content="#087f78">
 <link rel="manifest" href="manifest.json">
 <title>Rifa Control</title>
+
 <style>
 :root{--teal:#087f78;--teal2:#dff3f1;--green:#2e9d4d;--orange:#d97918;--bg:#f4f8f8;--text:#183234;--muted:#6b7c7e}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:var(--text)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:var(--text)}
 header{background:#fff;padding:22px 18px 14px;position:sticky;top:0;z-index:5;border-bottom:1px solid #e5eeee}
-h1{margin:0 0 5px;font-size:24px}h2{font-size:19px;margin:20px 0 10px}.sub{color:var(--muted);font-size:14px}
-main{max-width:760px;margin:auto;padding:14px 14px 90px}.card{background:#fff;border:1px solid #e1ebeb;border-radius:16px;padding:16px;margin:10px 0;box-shadow:0 2px 8px #0000000a}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.stat{background:#f8fbfb;border-radius:12px;padding:12px}.stat b{font-size:19px;display:block;margin-top:4px}.green{color:var(--green)}.orange{color:var(--orange)}
-.progress{height:8px;background:#e7eeee;border-radius:10px;overflow:hidden}.progress i{display:block;height:100%;background:var(--teal);border-radius:10px}
-button,input,select{font:inherit}button{border:0;border-radius:12px;padding:12px 15px;background:var(--teal);color:white;font-weight:600}button.secondary{background:#edf6f5;color:var(--teal)}button.danger{background:#fff0f0;color:#b33}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.session{cursor:pointer}.session .name{font-weight:700;font-size:16px}.money{font-weight:700;color:var(--teal)}
-.filters{display:flex;gap:7px;overflow:auto;padding:5px 0}.filters button{white-space:nowrap;background:white;color:#506163;border:1px solid #dbe7e7}.filters button.active{background:var(--teal);color:white;border-color:var(--teal)}
-.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}.num{padding:9px 2px;border:1px solid #dce6e6;background:#fff;color:#465759;border-radius:8px;text-align:center;font-size:12px;min-width:0}.num.paid{background:#e3f5e5;color:#22853b;border-color:#bfe2c5}.num.part{background:#fff0df;color:#bd6510;border-color:#f0cfaa}.num.selected{outline:2px solid var(--teal)}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #dfe9e9;padding:8px;display:flex;gap:8px;z-index:10}.bottom button{flex:1;background:white;color:#657274;border:1px solid #dce7e7}.bottom button.active{background:var(--teal);color:white}
-.hidden{display:none!important}.modal{position:fixed;inset:0;background:#0007;display:flex;align-items:flex-end;z-index:20}.sheet{background:white;width:100%;max-width:760px;margin:auto;border-radius:22px 22px 0 0;padding:20px;max-height:90vh;overflow:auto}.sheet h2{margin-top:0;font-size:25px}.field{margin:12px 0}.field label{display:block;font-size:13px;color:#687779;margin-bottom:6px}.field input,.field select{width:100%;padding:13px;border:1px solid #ccdada;border-radius:11px;background:white}
-.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px}.loginbox{width:100%;max-width:420px;background:white;padding:25px;border-radius:22px;box-shadow:0 8px 35px #00000012}.loginbox h1{color:var(--teal);font-size:30px}.loginbox button{width:100%;margin-top:8px}.error{color:#b33;font-size:14px;margin-top:10px}
-@media(min-width:600px){.stats{grid-template-columns:repeat(4,1fr)}.grid{gap:7px}.num{font-size:13px;padding:10px 3px}}
+h1{margin:0 0 5px;font-size:24px}
+h2{font-size:19px;margin:20px 0 10px}
+.sub{color:var(--muted);font-size:14px}
+main{max-width:760px;margin:auto;padding:14px 14px 90px}
+.card{background:#fff;border:1px solid #e1ebeb;border-radius:16px;padding:16px;margin:10px 0;box-shadow:0 2px 8px #0000000a}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.stat{background:#f8fbfb;border-radius:12px;padding:12px}
+.stat b{font-size:19px;display:block;margin-top:4px}
+.green{color:var(--green)}
+.orange{color:var(--orange)}
+.progress{height:8px;background:#e7eeee;border-radius:10px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--teal);border-radius:10px}
+button,input,select{font:inherit}
+button{border:0;border-radius:12px;padding:12px 15px;background:var(--teal);color:white;font-weight:600}
+button.secondary{background:#edf6f5;color:var(--teal)}
+button.danger{background:#fff0f0;color:#b33}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.session{cursor:pointer}
+.session .name{font-weight:700;font-size:16px}
+.money{font-weight:700;color:var(--teal)}
+.filters{display:flex;gap:7px;overflow:auto;padding:5px 0}
+.filters button{white-space:nowrap;background:white;color:#506163;border:1px solid #dbe7e7}
+.filters button.active{background:var(--teal);color:white;border-color:var(--teal)}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.num{padding:9px 2px;border:1px solid #dce6e6;background:#fff;color:#465759;border-radius:8px;text-align:center;font-size:12px;min-width:0}
+.num.paid{background:#e3f5e5;color:#22853b;border-color:#bfe2c5}
+.num.part{background:#fff0df;color:#bd6510;border-color:#f0cfaa}
+.num.selected{outline:2px solid var(--teal)}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #dfe9e9;padding:8px;display:flex;gap:8px;z-index:10}
+.bottom button{flex:1;background:white;color:#657274;border:1px solid #dce7e7}
+.bottom button.active{background:var(--teal);color:white}
+.hidden{display:none!important}
+.modal{position:fixed;inset:0;background:#0007;display:flex;align-items:flex-end;z-index:20}
+.sheet{background:white;width:100%;max-width:760px;margin:auto;border-radius:22px 22px 0 0;padding:20px;max-height:90vh;overflow:auto}
+.sheet h2{margin-top:0;font-size:25px}
+.field{margin:12px 0}
+.field label{display:block;font-size:13px;color:#687779;margin-bottom:6px}
+.field input,.field select{width:100%;padding:13px;border:1px solid #ccdada;border-radius:11px;background:white}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px}
+.loginbox{width:100%;max-width:420px;background:white;padding:25px;border-radius:22px;box-shadow:0 8px 35px #00000012}
+.loginbox h1{color:var(--teal);font-size:30px}
+.loginbox button{width:100%;margin-top:8px}
+.error{color:#b33;font-size:14px;margin-top:10px}
+@media(min-width:600px){
+.stats{grid-template-columns:repeat(4,1fr)}
+.grid{gap:7px}
+.num{font-size:13px;padding:10px 3px}
+}
 </style>
 </head>
+
 <body>
 <div id="app"></div>
+
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyBJwjaQEFTqK8HzzaoEMYEOktt5JsIY9Pk",
-    authDomain: "rifa-app-b7ca0.firebaseapp.com",
-    databaseURL: "https://rifa-app-b7ca0-default-rtdb.firebaseio.com",
-    projectId: "rifa-app-b7ca0",
-    storageBucket: "rifa-app-b7ca0.firebasestorage.app",
-    messagingSenderId: "238196948312",
-    appId: "1:238196948312:web:d0c63374aaeea14d6e792d"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBJwjaQEFTqK8HzzaoEMYEOktt5JsIY9Pk",
+  authDomain: "rifa-app-b7ca0.firebaseapp.com",
+  databaseURL: "https://rifa-app-b7ca0-default-rtdb.firebaseio.com",
+  projectId: "rifa-app-b7ca0",
+  storageBucket: "rifa-app-b7ca0.firebasestorage.app",
+  messagingSenderId: "238196948312",
+  appId: "1:238196948312:web:d0c63374aaeea14d6e792d"
+};
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-</script><script>
-const USERS={Administrador:{role:"admin"},"Rifa 1":{role:"rifa"},"Rifa 2":{role:"rifa"},"Rifa 3":{role:"rifa"},"Rifa 4":{role:"rifa"},"Rifa 5":{role:"rifa"},"Rifa 6":{role:"rifa"},"Rifa 7":{role:"rifa"},"Rifa 8":{role:"rifa"},"Rifa 9":{role:"rifa"},"Rifa 0":{role:"rifa"}};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+const USERS={
+  Administrador:{role:"admin"},
+  "Rifa 1":{role:"rifa"},
+  "Rifa 2":{role:"rifa"},
+  "Rifa 3":{role:"rifa"},
+  "Rifa 4":{role:"rifa"},
+  "Rifa 5":{role:"rifa"},
+  "Rifa 6":{role:"rifa"},
+  "Rifa 7":{role:"rifa"},
+  "Rifa 8":{role:"rifa"},
+  "Rifa 9":{role:"rifa"},
+  "Rifa 0":{role:"rifa"}
+};
+
 const defaultPass="1234";
-// Las 10 cartas son FIJAS: 1.000 numeros, 100 por vendedor, sin repetir y sin generarlos al azar.
-const CARD_NUMBERS=[[53,190,327,464,601,738,875,12,149,286,423,560,697,834,971,108,245,382,519,656,793,930,67,204,341,478,615,752,889,26,163,300,437,574,711,848,985,122,259,396,533,670,807,944,81,218,355,492,629,766,903,40,177,314,451,588,725,862,999,136,273,410,547,684,821,958,95,232,369,506,643,780,917,54,191,328,465,602,739,876,13,150,287,424,561,698,835,972,109,246,383,520,657,794,931,68,205,342,479,616],[753,890,27,164,301,438,575,712,849,986,123,260,397,534,671,808,945,82,219,356,493,630,767,904,41,178,315,452,589,726,863,0,137,274,411,548,685,822,959,96,233,370,507,644,781,918,55,192,329,466,603,740,877,14,151,288,425,562,699,836,973,110,247,384,521,658,795,932,69,206,343,480,617,754,891,28,165,302,439,576,713,850,987,124,261,398,535,672,809,946,83,220,357,494,631,768,905,42,179,316],[453,590,727,864,1,138,275,412,549,686,823,960,97,234,371,508,645,782,919,56,193,330,467,604,741,878,15,152,289,426,563,700,837,974,111,248,385,522,659,796,933,70,207,344,481,618,755,892,29,166,303,440,577,714,851,988,125,262,399,536,673,810,947,84,221,358,495,632,769,906,43,180,317,454,591,728,865,2,139,276,413,550,687,824,961,98,235,372,509,646,783,920,57,194,331,468,605,742,879,16],[153,290,427,564,701,838,975,112,249,386,523,660,797,934,71,208,345,482,619,756,893,30,167,304,441,578,715,852,989,126,263,400,537,674,811,948,85,222,359,496,633,770,907,44,181,318,455,592,729,866,3,140,277,414,551,688,825,962,99,236,373,510,647,784,921,58,195,332,469,606,743,880,17,154,291,428,565,702,839,976,113,250,387,524,661,798,935,72,209,346,483,620,757,894,31,168,305,442,579,716],[853,990,127,264,401,538,675,812,949,86,223,360,497,634,771,908,45,182,319,456,593,730,867,4,141,278,415,552,689,826,963,100,237,374,511,648,785,922,59,196,333,470,607,744,881,18,155,292,429,566,703,840,977,114,251,388,525,662,799,936,73,210,347,484,621,758,895,32,169,306,443,580,717,854,991,128,265,402,539,676,813,950,87,224,361,498,635,772,909,46,183,320,457,594,731,868,5,142,279,416],[553,690,827,964,101,238,375,512,649,786,923,60,197,334,471,608,745,882,19,156,293,430,567,704,841,978,115,252,389,526,663,800,937,74,211,348,485,622,759,896,33,170,307,444,581,718,855,992,129,266,403,540,677,814,951,88,225,362,499,636,773,910,47,184,321,458,595,732,869,6,143,280,417,554,691,828,965,102,239,376,513,650,787,924,61,198,335,472,609,746,883,20,157,294,431,568,705,842,979,116],[253,390,527,664,801,938,75,212,349,486,623,760,897,34,171,308,445,582,719,856,993,130,267,404,541,678,815,952,89,226,363,500,637,774,911,48,185,322,459,596,733,870,7,144,281,418,555,692,829,966,103,240,377,514,651,788,925,62,199,336,473,610,747,884,21,158,295,432,569,706,843,980,117,254,391,528,665,802,939,76,213,350,487,624,761,898,35,172,309,446,583,720,857,994,131,268,405,542,679,816],[953,90,227,364,501,638,775,912,49,186,323,460,597,734,871,8,145,282,419,556,693,830,967,104,241,378,515,652,789,926,63,200,337,474,611,748,885,22,159,296,433,570,707,844,981,118,255,392,529,666,803,940,77,214,351,488,625,762,899,36,173,310,447,584,721,858,995,132,269,406,543,680,817,954,91,228,365,502,639,776,913,50,187,324,461,598,735,872,9,146,283,420,557,694,831,968,105,242,379,516],[653,790,927,64,201,338,475,612,749,886,23,160,297,434,571,708,845,982,119,256,393,530,667,804,941,78,215,352,489,626,763,900,37,174,311,448,585,722,859,996,133,270,407,544,681,818,955,92,229,366,503,640,777,914,51,188,325,462,599,736,873,10,147,284,421,558,695,832,969,106,243,380,517,654,791,928,65,202,339,476,613,750,887,24,161,298,435,572,709,846,983,120,257,394,531,668,805,942,79,216],[353,490,627,764,901,38,175,312,449,586,723,860,997,134,271,408,545,682,819,956,93,230,367,504,641,778,915,52,189,326,463,600,737,874,11,148,285,422,559,696,833,970,107,244,381,518,655,792,929,66,203,340,477,614,751,888,25,162,299,436,573,710,847,984,121,258,395,532,669,806,943,80,217,354,491,628,765,902,39,176,313,450,587,724,861,998,135,272,409,546,683,820,957,94,231,368,505,642,779,916]];
+
+// Las 10 cartas son FIJAS: 1.000 números, 100 por vendedor.
+const CARD_NUMBERS=[
+[53,190,327,464,601,738,875,12,149,286,423,560,697,834,971,108,245,382,519,656,793,930,67,204,341,478,615,752,889,26,163,300,437,574,711,848,985,122,259,396,533,670,807,944,81,218,355,492,629,766,903,40,177,314,451,588,725,862,999,136,273,410,547,684,821,958,95,232,369,506,643,780,917,54,191,328,465,602,739,876,13,150,287,424,561,698,835,972,109,246,383,520,657,794,931,68,205,342,479,616],
+[753,890,27,164,301,438,575,712,849,986,123,260,397,534,671,808,945,82,219,356,493,630,767,904,41,178,315,452,589,726,863,0,137,274,411,548,685,822,959,96,233,370,507,644,781,918,55,192,329,466,603,740,877,14,151,288,425,562,699,836,973,110,247,384,521,658,795,932,69,206,343,480,617,754,891,28,165,302,439,576,713,850,987,124,261,398,535,672,809,946,83,220,357,494,631,768,905,42,179,316],
+[453,590,727,864,1,138,275,412,549,686,823,960,97,234,371,508,645,782,919,56,193,330,467,604,741,878,15,152,289,426,563,700,837,974,111,248,385,522,659,796,933,70,207,344,481,618,755,892,29,166,303,440,577,714,851,988,125,262,399,536,673,810,947,84,221,358,495,632,769,906,43,180,317,454,591,728,865,2,139,276,413,550,687,824,961,98,235,372,509,646,783,920,57,194,331,468,605,742,879,16],
+[153,290,427,564,701,838,975,112,249,386,523,660,797,934,71,208,345,482,619,756,893,30,167,304,441,578,715,852,989,126,263,400,537,674,811,948,85,222,359,496,633,770,907,44,181,318,455,592,729,866,3,140,277,414,551,688,825,962,99,236,373,510,647,784,921,58,195,332,469,606,743,880,17,154,291,428,565,702,839,976,113,250,387,524,661,798,935,72,209,346,483,620,757,894,31,168,305,442,579,716],
+[853,990,127,264,401,538,675,812,949,86,223,360,497,634,771,908,45,182,319,456,593,730,867,4,141,278,415,552,689,826,963,100,237,374,511,648,785,922,59,196,333,470,607,744,881,18,155,292,429,566,703,840,977,114,251,388,525,662,799,936,73,210,347,484,621,758,895,32,169,306,443,580,717,854,991,128,265,402,539,676,813,950,87,224,361,498,635,772,909,46,183,320,457,594,731,868,5,142,279,416],
+[553,690,827,964,101,238,375,512,649,786,923,60,197,334,471,608,745,882,19,156,293,430,567,704,841,978,115,252,389,526,663,800,937,74,211,348,485,622,759,896,33,170,307,444,581,718,855,992,129,266,403,540,677,814,951,88,225,362,499,636,773,910,47,184,321,458,595,732,869,6,143,280,417,554,691,828,965,102,239,376,513,650,787,924,61,198,335,472,609,746,883,20,157,294,431,568,705,842,979,116],
+[253,390,527,664,801,938,75,212,349,486,623,760,897,34,171,308,445,582,719,856,993,130,267,404,541,678,815,952,89,226,363,500,637,774,911,48,185,322,459,596,733,870,7,144,281,418,555,692,829,966,103,240,377,514,651,788,925,62,199,336,473,610,747,884,21,158,295,432,569,706,843,980,117,254,391,528,665,802,939,76,213,350,487,624,761,898,35,172,309,446,583,720,857,994,131,268,405,542,679,816],
+[953,90,227,364,501,638,775,912,49,186,323,460,597,734,871,8,145,282,419,556,693,830,967,104,241,378,515,652,789,926,63,200,337,474,611,748,885,22,159,296,433,570,707,844,981,118,255,392,529,666,803,940,77,214,351,488,625,762,899,36,173,310,447,584,721,858,995,132,269,406,543,680,817,954,91,228,365,502,639,776,913,50,187,324,461,598,735,872,9,146,283,420,557,694,831,968,105,242,379,516],
+[653,790,927,64,201,338,475,612,749,886,23,160,297,434,571,708,845,982,119,256,393,530,667,804,941,78,215,352,489,626,763,900,37,174,311,448,585,722,859,996,133,270,407,544,681,818,955,92,229,366,503,640,777,914,51,188,325,462,599,736,873,10,147,284,421,558,695,832,969,106,243,380,517,654,791,928,65,202,339,476,613,750,887,24,161,298,435,572,709,846,983,120,257,394,531,668,805,942,79,216],
+[353,490,627,764,901,38,175,312,449,586,723,860,997,134,271,408,545,682,819,956,93,230,367,504,641,778,915,52,189,326,463,600,737,874,11,148,285,422,559,696,833,970,107,244,381,518,655,792,929,66,203,340,477,614,751,888,25,162,299,436,573,710,847,984,121,258,395,532,669,806,943,80,217,354,491,628,765,902,39,176,313,450,587,724,861,998,135,272,409,546,683,820,957,94,231,368,505,642,779,916]
+];
+
 const RIFAS=Object.keys(USERS).filter(x=>x!=="Administrador");
 const CARD_MAP=Object.fromEntries(RIFAS.map((r,i)=>[r,CARD_NUMBERS[i]]));
+
+// Conservamos localStorage como respaldo local.
 let data=JSON.parse(localStorage.getItem("rifaData")||"{}");
+
 let current=localStorage.getItem("rifaUser")||"";
 let view="sessions",activeRifa="",filter="all",selected=null;
 
-function save(){db.ref("rifaData").set(data)}
+function save(){
+  localStorage.setItem("rifaData",JSON.stringify(data));
+  return db.ref("rifaData").set(data);
+}
+
 function initRifa(name){
   if(!data[name]) data[name]={price:500,numbers:{}};
   if(!data[name].price) data[name].price=500;
   if(!data[name].numbers) data[name].numbers={};
-  // Elimina registros de prueba que no pertenecen a la carta fija de esta rifa.
+
   const allowed=new Set(CARD_MAP[name]||[]);
-  Object.keys(data[name].numbers).forEach(k=>{if(!allowed.has(Number(k))) delete data[name].numbers[k]});
+  Object.keys(data[name].numbers).forEach(k=>{
+    if(!allowed.has(Number(k))) delete data[name].numbers[k];
+  });
 }
-RIFAS.forEach(initRifa); save();
+
+RIFAS.forEach(initRifa);
 
 function login(){
-app.innerHTML=`<div class="login"><div class="loginbox"><h1>Rifa Control</h1><p class="sub">Administración de rifas</p>
-<div class="field"><label>Usuario</label><select id="user">${Object.keys(USERS).map(u=>`<option>${u}</option>`).join("")}</select></div>
-<div class="field"><label>Contraseña</label><input id="pass" type="password" placeholder="Contraseña"></div>
-<button onclick="doLogin()">Entrar</button><p class="sub" style="margin-top:14px">Versión inicial: contraseña temporal <b>1234</b>.</p><div id="err" class="error"></div></div></div>`;
+  app.innerHTML=`<div class="login"><div class="loginbox"><h1>Rifa Control</h1><p class="sub">Administración de rifas</p>
+  <div class="field"><label>Usuario</label><select id="user">${Object.keys(USERS).map(u=>`<option>${u}</option>`).join("")}</select></div>
+  <div class="field"><label>Contraseña</label><input id="pass" type="password" placeholder="Contraseña"></div>
+  <button onclick="doLogin()">Entrar</button><p class="sub" style="margin-top:14px">Versión inicial: contraseña temporal <b>1234</b>.</p><div id="err" class="error"></div></div></div>`;
 }
-function doLogin(){let u=document.getElementById("user").value,p=document.getElementById("pass").value;if(p!==defaultPass){document.getElementById("err").textContent="Contraseña incorrecta.";return}current=u;localStorage.setItem("rifaUser",u);if(u==="Administrador"){view="sessions";activeRifa=""}else{view="card";activeRifa=u}render()}
-function logout(){localStorage.removeItem("rifaUser");current="";activeRifa="";view="sessions";login()}
-function nums(r){initRifa(r);return data[r].numbers}
-function counts(r){let n=nums(r),paid=0,part=0;Object.values(n).forEach(x=>x.status==="paid"?paid++:x.status==="part"&&part++);return {paid,part,sold:paid+part}}
-function money(r){let c=counts(r);return c.paid*data[r].price+c.part*data[r].price}
-function render(){if(!current)return login();if(current!=="Administrador"){activeRifa=current;view="card";return card()}if(view==="sessions")sessions();else if(view==="card")card();else summary()}
+
+function doLogin(){
+  let u=document.getElementById("user").value;
+  let p=document.getElementById("pass").value;
+
+  if(p!==defaultPass){
+    document.getElementById("err").textContent="Contraseña incorrecta.";
+    return;
+  }
+
+  current=u;
+  localStorage.setItem("rifaUser",u);
+
+  if(u==="Administrador"){
+    view="sessions";
+    activeRifa="";
+  }else{
+    view="card";
+    activeRifa=u;
+  }
+
+  render();
+}
+
+function logout(){
+  localStorage.removeItem("rifaUser");
+  current="";
+  activeRifa="";
+  view="sessions";
+  login();
+}
+
+function nums(r){
+  initRifa(r);
+  return data[r].numbers;
+}
+
+function counts(r){
+  let n=nums(r),paid=0,part=0;
+  Object.values(n).forEach(x=>{
+    x.status==="paid"?paid++:x.status==="part"&&part++;
+  });
+  return {paid,part,sold:paid+part};
+}
+
+function money(r){
+  let c=counts(r);
+  return c.paid*data[r].price+c.part*data[r].price;
+}
+
+function render(){
+  if(!current)return login();
+
+  if(current!=="Administrador"){
+    activeRifa=current;
+    view="card";
+    return card();
+  }
+
+  if(view==="sessions")sessions();
+  else if(view==="card")card();
+  else summary();
+}
+
 function sessions(){
-app.innerHTML=`<header><div class="row"><div><h1>Hola, Administrador</h1><div class="sub">10 vendedores · 100 números fijos por carta</div></div><button class="secondary" onclick="logout()">🚪 Salir</button></div></header><main>
-<h2>Sesiones</h2>${RIFAS.map(r=>{let c=counts(r),pct=(c.sold/100*100).toFixed(0);return `<div class="card session" onclick="openRifa('${r}')"><div class="row"><div><div class="name">${r}</div><div class="sub">${c.sold}/100 vendidos · $${money(r).toLocaleString()}</div></div><b>${pct}%</b></div><div class="progress" style="margin:10px 0"><i style="width:${pct}%"></i></div><div class="row"><span class="green">● Pagados: ${c.paid}</span><span class="orange">● Abonados: ${c.part}</span></div></div>`}).join("")}</main>${bottom("sessions")}`;
+  app.innerHTML=`<header><div class="row"><div><h1>Hola, Administrador</h1><div class="sub">10 vendedores · 100 números fijos por carta</div></div><button class="secondary" onclick="logout()">🚪 Salir</button></div></header><main>
+  <h2>Sesiones</h2>${RIFAS.map(r=>{
+    let c=counts(r),pct=(c.sold/100*100).toFixed(0);
+    return `<div class="card session" onclick="openRifa('${r}')"><div class="row"><div><div class="name">${r}</div><div class="sub">${c.sold}/100 vendidos · $${money(r).toLocaleString()}</div></div><b>${pct}%</b></div><div class="progress" style="margin:10px 0"><i style="width:${pct}%"></i></div><div class="row"><span class="green">● Pagados: ${c.paid}</span><span class="orange">● Abonados: ${c.part}</span></div></div>`
+  }).join("")}</main>${bottom("sessions")}`;
 }
-function openRifa(r){activeRifa=r;view="card";render()}
+
+function openRifa(r){
+  activeRifa=r;
+  view="card";
+  render();
+}
+
 function card(){
-let r=activeRifa,c=counts(r),assigned=CARD_MAP[r]||[],items=[];
-assigned.forEach(i=>{let x=nums(r)[i],ok=filter==="all"||(filter==="paid"&&x?.status==="paid")||(filter==="part"&&x?.status==="part")||(filter==="free"&&!x);if(ok)items.push([i,x])});
-let canAdmin=current==="Administrador";
-app.innerHTML=`<header><div class="row"><div><h1>${r}</h1><div class="sub">Carta fija · ${c.sold}/100 vendidos · $${money(r).toLocaleString()}</div></div><div>${canAdmin?`<button class="secondary" onclick="view='sessions';render()">Volver</button>`:""} <button class="secondary" onclick="logout()">🚪 Salir</button></div></div></header><main>
-<div class="card"><b>Esta carta tiene 100 números predeterminados.</b><div class="sub" style="margin-top:5px">Cada vendedor recibe una carta diferente y sus números no se repiten con otra sesión.</div></div>
-<div class="filters"><button class="${filter==='all'?'active':''}" onclick="filter='all';render()">Todos</button><button class="${filter==='free'?'active':''}" onclick="filter='free';render()">Disponibles</button><button class="${filter==='part'?'active':''}" onclick="filter='part';render()">🟠 Abonados</button><button class="${filter==='paid'?'active':''}" onclick="filter='paid';render()">🟢 Pagados</button></div>
-<div class="card"><div class="grid">${items.map(([i,x])=>`<button class="num ${x?.status==='paid'?'paid':x?.status==='part'?'part':''}" onclick="edit(${i})">${String(i).padStart(3,'0')}</button>`).join("")}</div></div>
-<div class="card"><div class="row"><span class="green">● Pagados: ${c.paid}</span><span class="orange">● Abonados: ${c.part}</span><b>$${money(r).toLocaleString()}</b></div></div>
-</main>${canAdmin?bottom("card"):""}`;
+  let r=activeRifa,c=counts(r),assigned=CARD_MAP[r]||[],items=[];
+
+  assigned.forEach(i=>{
+    let x=nums(r)[i];
+    let ok=filter==="all"||
+      (filter==="paid"&&x?.status==="paid")||
+      (filter==="part"&&x?.status==="part")||
+      (filter==="free"&&!x);
+
+    if(ok)items.push([i,x]);
+  });
+
+  let canAdmin=current==="Administrador";
+
+  app.innerHTML=`<header><div class="row"><div><h1>${r}</h1><div class="sub">Carta fija · ${c.sold}/100 vendidos · $${money(r).toLocaleString()}</div></div><div>${canAdmin?`<button class="secondary" onclick="view='sessions';render()">Volver</button>`:""} <button class="secondary" onclick="logout()">🚪 Salir</button></div></div></header><main>
+  <div class="card"><b>Esta carta tiene 100 números predeterminados.</b><div class="sub" style="margin-top:5px">Cada vendedor recibe una carta diferente y sus números no se repiten con otra sesión.</div></div>
+  <div class="filters"><button class="${filter==='all'?'active':''}" onclick="filter='all';render()">Todos</button><button class="${filter==='free'?'active':''}" onclick="filter='free';render()">Disponibles</button><button class="${filter==='part'?'active':''}" onclick="filter='part';render()">🟠 Abonados</button><button class="${filter==='paid'?'active':''}" onclick="filter='paid';render()">🟢 Pagados</button></div>
+  <div class="card"><div class="grid">${items.map(([i,x])=>`<button class="num ${x?.status==='paid'?'paid':x?.status==='part'?'part':''}" onclick="edit(${i})">${String(i).padStart(3,'0')}</button>`).join("")}</div></div>
+  <div class="card"><div class="row"><span class="green">● Pagados: ${c.paid}</span><span class="orange">● Abonados: ${c.part}</span><b>$${money(r).toLocaleString()}</b></div></div>
+  </main>${canAdmin?bottom("card"):""}`;
 }
-function edit(i){selected=i;let x=nums(activeRifa)[i]||{name:"",phone:"",status:"",paid:0};app.insertAdjacentHTML("beforeend",`<div class="modal" id="modal"><div class="sheet"><div class="row"><div><h2>Boleto ${String(i).padStart(3,'0')}</h2><div class="sub">${activeRifa}</div></div><button class="secondary" onclick="closeModal()">Cerrar</button></div>
-<div class="field"><label>Nombre del comprador</label><input id="buyer" value="${esc(x.name)}"></div>
-<div class="field"><label>Teléfono</label><input id="phone" value="${esc(x.phone)}" inputmode="tel"></div>
-<div class="field"><label>Estado</label><select id="status"><option value="">Disponible</option><option value="part" ${x.status==='part'?'selected':''}>Abonado</option><option value="paid" ${x.status==='paid'?'selected':''}>Pagado</option></select></div>
-<div class="field"><label>Precio del boleto</label><input id="price" type="number" value="${x.price||data[activeRifa].price}"></div>
-<button style="width:100%" onclick="saveTicket()">Guardar boleto</button>${x.name?`<button class="danger" style="width:100%;margin-top:8px" onclick="removeTicket()">Liberar número</button>`:""}</div></div>`)}
-function esc(s){return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll('"',"&quot;")}
-function closeModal(){document.getElementById("modal")?.remove()}
-function saveTicket(){let st=document.getElementById("status").value,n=nums(activeRifa);if(!st)delete n[selected];else n[selected]={name:document.getElementById("buyer").value,phone:document.getElementById("phone").value,status:st,price:Number(document.getElementById("price").value)||data[activeRifa].price};save();closeModal();render()}
-function removeTicket(){delete nums(activeRifa)[selected];save();closeModal();render()}
+
+function edit(i){
+  selected=i;
+  let x=nums(activeRifa)[i]||{name:"",phone:"",status:"",paid:0};
+
+  app.insertAdjacentHTML("beforeend",`<div class="modal" id="modal"><div class="sheet"><div class="row"><div><h2>Boleto ${String(i).padStart(3,'0')}</h2><div class="sub">${activeRifa}</div></div><button class="secondary" onclick="closeModal()">Cerrar</button></div>
+
+  <div class="field"><label>Nombre del comprador</label><input id="buyer" value="${esc(x.name)}"></div>
+  <div class="field"><label>Teléfono</label><input id="phone" value="${esc(x.phone)}" inputmode="tel"></div>
+
+  <div class="field"><label>Estado</label><select id="status"><option value="">Disponible</option><option value="part" ${x.status==='part'?'selected':''}>Abonado</option><option value="paid" ${x.status==='paid'?'selected':''}>Pagado</option></select></div>
+
+  <div class="field"><label>Precio del boleto</label><input id="price" type="number" value="${x.price||data[activeRifa].price}"></div>
+  <button style="width:100%" onclick="saveTicket()">Guardar boleto</button>${x.name?`<button class="danger" style="width:100%;margin-top:8px" onclick="removeTicket()">Liberar número</button>`:""}</div></div>`);
+}
+
+function esc(s){
+  return String(s||"")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll('"',"&quot;");
+}
+
+function closeModal(){
+  document.getElementById("modal")?.remove();
+}
+
+function saveTicket(){
+  let st=document.getElementById("status").value;
+  let n=nums(activeRifa)[selected];
+
+  if(!st){
+    delete n;
+  }else{
+    nums(activeRifa)[selected]={
+      name:document.getElementById("buyer").value,
+      phone:document.getElementById("phone").value,
+      status:st,
+      price:Number(document.getElementById("price").value)||data[activeRifa].price
+    };
+  }
+
+  save();
+  closeModal();
+  render();
+}
+
+function removeTicket(){
+  delete nums(activeRifa)[selected];
+  save();
+  closeModal();
+  render();
+}
+
 function summary(){
-let rows=[];RIFAS.forEach(r=>Object.entries(nums(r)).forEach(([i,x])=>{if(x.status==="part")rows.push({r,i,x})}));
-app.innerHTML=`<header><div class="row"><div><h1>Resumen general</h1><div class="sub">Todos los números pendientes de pago</div></div><button class="secondary" onclick="logout()">🚪 Salir</button></div></header><main><div class="stats card">${RIFAS.reduce((a,r)=>a+counts(r).sold,0)}<span class="sub"> vendidos de 1000</span></div><h2>Pendientes de pago (${rows.length})</h2>${rows.length?rows.map(o=>`<div class="card"><div class="row"><div><b>${esc(o.x.name)||"Sin nombre"}</b><div class="sub">${o.r} · Boleto ${String(o.i).padStart(3,'0')} · ${esc(o.x.phone)}</div></div><b class="orange">$${Number(o.x.price||data[o.r].price).toLocaleString()}</b></div></div>`).join(""):"<div class='card'>No hay boletos abonados pendientes.</div>"}</main>${bottom("summary")}`;
+  let rows=[];
+
+  RIFAS.forEach(r=>{
+    Object.entries(nums(r)).forEach(([i,x])=>{
+      if(x.status==="part")rows.push({r,i,x});
+    });
+  });
+
+  app.innerHTML=`<header><div class="row"><div><h1>Resumen general</h1><div class="sub">Todos los números pendientes de pago</div></div><button class="secondary" onclick="logout()">🚪 Salir</button></div></header><main><div class="stats card">${RIFAS.reduce((a,r)=>a+counts(r).sold,0)}<span class="sub"> vendidos de 1000</span></div><h2>Pendientes de pago (${rows.length})</h2>${rows.length?rows.map(o=>`<div class="card"><div class="row"><div><b>${esc(o.x.name)||"Sin nombre"}</b><div class="sub">${o.r} · Boleto ${String(o.i).padStart(3,'0')} · ${esc(o.x.phone)}</div></div><b class="orange">$${Number(o.x.price||data[o.r].price).toLocaleString()}</b></div></div>`).join(""):"<div class='card'>No hay boletos abonados pendientes.</div>"}</main>${bottom("summary")}`;
 }
-function bottom(active){return `<nav class="bottom"><button class="${active==='sessions'?'active':''}" onclick="view='sessions';render()">👥 Sesiones</button><button class="${active==='card'?'active':''}" onclick="view='card';render()">▦ Carta</button><button class="${active==='summary'?'active':''}" onclick="view='summary';render()">▥ Resumen</button></nav>`}
-render();
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
+
+function bottom(active){
+  return `<nav class="bottom"><button class="${active==='sessions'?'active':''}" onclick="view='sessions';render()">👥 Sesiones</button><button class="${active==='card'?'active':''}" onclick="view='card';render()">▦ Carta</button><button class="${active==='summary'?'active':''}" onclick="view='summary';render()">▥ Resumen</button></nav>`;
+}
+
+// Sincronización inicial con Firebase.
+db.ref("rifaData").once("value").then(snapshot=>{
+  if(snapshot.exists()){
+    data=snapshot.val();
+    RIFAS.forEach(initRifa);
+    localStorage.setItem("rifaData",JSON.stringify(data));
+    render();
+  }else{
+    RIFAS.forEach(initRifa);
+    save().then(()=>render());
+  }
+}).catch(error=>{
+  console.error("Error cargando Firebase:",error);
+  RIFAS.forEach(initRifa);
+  render();
+});
+
+// Mantiene la aplicación sincronizada si los datos cambian desde otro dispositivo.
+db.ref("rifaData").on("value",snapshot=>{
+  if(!snapshot.exists())return;
+
+  data=snapshot.val();
+  RIFAS.forEach(initRifa);
+  localStorage.setItem("rifaData",JSON.stringify(data));
+
+  if(current)render();
+});
+
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js");
+}
 </script>
-</body></html>
+
+</body>
+</html>
