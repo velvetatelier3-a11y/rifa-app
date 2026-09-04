@@ -53,7 +53,7 @@ let data=JSON.parse(localStorage.getItem("rifaData")||"{}");
 let current=localStorage.getItem("rifaUser")||"";
 let view="sessions",activeRifa="",filter="all",selected=null;
 
-function save(){localStorage.setItem("rifaData",JSON.stringify(data))}
+function save(){db.ref("rifaData").set(data)}
 function initRifa(name){
   if(!data[name]) data[name]={price:500,numbers:{}};
   if(!data[name].price) data[name].price=500;
