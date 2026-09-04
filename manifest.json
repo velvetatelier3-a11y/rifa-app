@@ -1,0 +1,9 @@
+{
+  "name":"Rifa Control",
+  "short_name":"Rifa",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#f4f8f8",
+  "theme_color":"#087f78",
+  "lang":"es"
+}
